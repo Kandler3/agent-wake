@@ -1,0 +1,31 @@
+name: Tests
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        node: [22, 24]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Run isolated tests
+        shell: pwsh
+        run: |
+          $env:AGENT_WAKE_TEST_ROOT = Join-Path $env:RUNNER_TEMP 'agent-wake-tests'
+          npm test
+      - name: Check PowerShell syntax
+        shell: pwsh
+        run: |
+          foreach ($file in @('install.ps1', 'agent-wake.ps1')) {
+            $tokens = $null
+            $parseErrors = $null
+            [System.Management.Automation.Language.Parser]::ParseFile((Join-Path $PWD $file), [ref]$tokens, [ref]$parseErrors) | Out-Null
+            if ($parseErrors.Count) { throw ($parseErrors | Out-String) }
+          }

@@ -1,0 +1,3 @@
+interface:
+  display_name: "Agent Wake"
+  short_description: "Wake a Codex chat after background jobs and CI"

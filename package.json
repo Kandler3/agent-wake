@@ -1,0 +1,39 @@
+{
+  "name": "agent-wake",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Event-driven Codex Desktop wake-up CLI and agent skill for background commands, CI jobs, benchmarks, and external events.",
+  "license": "MIT",
+  "author": "Artem Kovalchuk",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kandler3/agent-wake.git"
+  },
+  "homepage": "https://github.com/Kandler3/agent-wake#readme",
+  "bugs": {
+    "url": "https://github.com/Kandler3/agent-wake/issues"
+  },
+  "keywords": [
+    "codex",
+    "codex-desktop",
+    "openai-codex",
+    "agent-skills",
+    "agent-wake",
+    "agent-awake",
+    "background-jobs",
+    "async-agent",
+    "ci-cd",
+    "benchmarks",
+    "event-driven",
+    "app-server",
+    "windows",
+    "powershell"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
