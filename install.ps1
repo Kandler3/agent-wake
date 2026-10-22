@@ -24,7 +24,7 @@ if ((Test-Path -LiteralPath $cmdPath) -and -not ((Get-Content -LiteralPath $cmdP
     throw 'An unrelated agent-wake cmd launcher already exists.'
 }
 foreach ($folder in @($destination,$binDirectory,$skillDirectory)) { [IO.Directory]::CreateDirectory($folder) | Out-Null }
-foreach ($name in @('package.json','rpc.mjs','store.mjs','worker.mjs','cli.mjs','agent-wake.ps1','agent-wake.cmd','README.md','README.ru.md','LICENSE')) {
+foreach ($name in @('package.json','rpc.mjs','store.mjs','worker.mjs','cli.mjs','title.mjs','agent-wake.ps1','agent-wake.cmd','README.md','README.ru.md','LICENSE')) {
     Copy-Item -LiteralPath (Join-Path $PSScriptRoot $name) -Destination (Join-Path $destination $name) -Force
 }
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'skills\agent-wake\SKILL.md') -Destination $skillPath -Force

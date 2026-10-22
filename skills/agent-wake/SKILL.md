@@ -15,6 +15,8 @@ For a command, allocate and retain a UUID before calling, then start:
     agent-wake run --name ci --job-id UUID --timeout 2h -- gh run watch RUN_ID --exit-status
     agent-wake run --name benchmark --job-id UUID --timeout 4h -- python benchmark.py
 
+Detached jobs add a temporary ⏳ prefix to the chat title until the last background worker exits. A manual rename is preserved.
+
 run detaches by default. Commands execute with inherited permissions, cwd and environment, without an implicit shell or elevation. For PowerShell scripts pass pwsh -NoProfile -File SCRIPT.ps1 explicitly. Do not hand an authorized command to a more privileged runner. Use the normal command approval path.
 
 For a process already producing an event:

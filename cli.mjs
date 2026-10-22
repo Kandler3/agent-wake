@@ -67,6 +67,7 @@ async function launch(record) {
   } finally { await log.close(); }
 }
 async function register(record, detached) {
+  record.background = detached;
   if (!(await store.create(record))) {
     const existing = scoped(await store.read(record.id));
     const same = existing.kind === record.kind && existing.name === record.name &&

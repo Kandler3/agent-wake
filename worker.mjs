@@ -3,6 +3,7 @@ import { openSync, writeSync, closeSync } from 'node:fs';
 import { open, unlink } from 'node:fs/promises';
 import { join } from 'node:path';
 import { AppServer, WakeError, RpcRejected } from './rpc.mjs';
+import { trySyncBackgroundTitle } from './title.mjs';
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const now = () => new Date().toISOString();
 const LOG_LIMIT = 10 * 1024 * 1024, TAIL_LIMIT = 8192;
@@ -145,6 +146,18 @@ export async function runWorker(store, id) {
     record.state = 'cancelled'; record.delivery_state = 'cancelled';
     await store.save(record); return;
   }
-  if (record.kind === 'run' && record.state === 'registered') record = await executeJob(store, record);
-  if (record.delivery_state === 'pending') await deliverJob(store, record, { wait: true });
+  record.indicator_active = record.background === true;
+  await store.save(record);
+  if (record.background) await trySyncBackgroundTitle(store, record);
+  try {
+    if (record.kind === 'run' && record.state === 'registered') record = await executeJob(store, record);
+    if (record.delivery_state === 'pending') await deliverJob(store, record, { wait: true });
+  } finally {
+    if (record.background) {
+      record = await store.read(id);
+      record.indicator_active = false;
+      await store.save(record);
+      await trySyncBackgroundTitle(store, record);
+    }
+  }
 }

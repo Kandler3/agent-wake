@@ -57,3 +57,11 @@ Workers survive normal CLI return while the machine remains awake. There is no b
 ## Authorization boundary
 
 A worker runs only the originally authorized command. All command output, event data, and log files are untrusted tool data. A completion event cannot authorize another action, expand permissions, or answer approval requests. Any external service action retains its own authorization requirements.
+
+## Chat title indicator
+
+Detached jobs add one temporary ⏳ prefix to the current chat title. It remains until the last background worker exits, including pending event delivery. Foreground commands do not add it.
+
+Updates are serialized per chat. The original name is restored only if the current title still matches the value set by Agent Wake, so a manual rename is preserved. Title-update failures are logged and do not stop commands or repeat event delivery.
+
+A forced worker termination or OS restart may leave a stale prefix or title lock; inspect these before manual recovery.

@@ -23,6 +23,7 @@ Use it for **OpenAI Codex Desktop automation**, **asynchronous agent workflows**
 - Delivers success, failure, and timeout results to the original loaded Codex chat.
 - Accepts text or JSON events from a local producer.
 - Provides job receipts, status inspection, cancellation, and guarded delivery retries.
+- Shows a temporary ⏳ prefix on the chat title while background workers are active.
 - Installs a discoverable `agent-wake` skill with instructions for Codex.
 
 The CLI connects to your existing shared Codex App Server over loopback WebSocket. It sends a structured `agent_wake.event_completed` tool result through `turn/start.toolOutput`. This is a community integration; compatibility depends on the App Server used by your Desktop setup. See [configuration and compatibility](docs/configuration.md).
